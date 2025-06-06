@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prebuild": "pnpx tailwindcss -i ./src/app/globals.css -o ./src/app/globals.css",
     "start": "next start",
     "lint": "next lint"
   },
