@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = nextConfig = {
   reactStrictMode: true,
   experimental: {
     optimizeCss: true,
@@ -9,5 +9,3 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
 };
-
-module.exports = nextConfig;
