@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { BoxEntry } from '@/store/boxStore';
-import { useBoxStore } from '@/store/boxStore';
+import { useEffect, useState } from "react";
+import { BoxEntry } from "@/store/boxStore";
+import { useBoxStore } from "@/store/boxStore";
 import {
   LineChart,
   Line,
@@ -11,18 +11,18 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
-} from 'recharts';
+  ResponsiveContainer,
+} from "recharts";
 
 interface BoxesGraphProps {
-  selectedBoxType: BoxEntry['boxType'] | 'all';
+  selectedBoxType: BoxEntry["boxType"] | "all";
 }
 
 interface GraphDataPoint {
   date: string;
-  'Nombre de boîtes': number;
-  'Coût total': number;
-  'Marge totale': number;
+  "Nombre de boîtes": number;
+  "Coût total": number;
+  "Marge totale": number;
 }
 
 export default function BoxesGraph({ selectedBoxType }: BoxesGraphProps) {
@@ -30,15 +30,16 @@ export default function BoxesGraph({ selectedBoxType }: BoxesGraphProps) {
   const [graphData, setGraphData] = useState<GraphDataPoint[]>([]);
 
   useEffect(() => {
-    const filteredEntries = selectedBoxType === 'all'
-      ? entries
-      : entries.filter(entry => entry.boxType === selectedBoxType);
+    const filteredEntries =
+      selectedBoxType === "all"
+        ? entries
+        : entries.filter((entry) => entry.boxType === selectedBoxType);
 
-    const data = filteredEntries.map(entry => ({
+    const data = filteredEntries.map((entry) => ({
       date: new Date(entry.date).toLocaleDateString(),
-      'Nombre de boîtes': entry.numberOfBoxes,
-      'Coût total': entry.totalCost,
-      'Marge totale': entry.totalMargin
+      "Nombre de boîtes": entry.numberOfBoxes,
+      "Coût total": entry.totalCost,
+      "Marge totale": entry.totalMargin,
     }));
 
     setGraphData(data);
@@ -68,4 +69,4 @@ export default function BoxesGraph({ selectedBoxType }: BoxesGraphProps) {
       </ResponsiveContainer>
     </div>
   );
-} 
+}
