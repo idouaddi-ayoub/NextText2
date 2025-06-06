@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { useBoxStore } from '@/store/boxStore';
+import { useState } from "react";
+import { format } from "date-fns";
+import { useBoxStore } from "@/store/boxStore";
 
-type BoxType = 'Regard double' | 'Regard de chasse' | 'Regard normal';
+type BoxType = "Regard double" | "Regard de chasse" | "Regard normal";
 
 interface FormData {
   date: string;
@@ -16,24 +16,30 @@ interface FormData {
 export default function Home() {
   const addEntry = useBoxStore((state) => state.addEntry);
   const [formData, setFormData] = useState<FormData>({
-    date: format(new Date(), 'yyyy-MM-dd'),
-    boxType: 'Regard normal',
+    date: format(new Date(), "yyyy-MM-dd"),
+    boxType: "Regard normal",
     numberOfBoxes: 0,
     totalCost: 0,
   });
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       addEntry(formData);
-      setMessage({ type: 'success', text: 'Données enregistrées avec succès!' });
-      
+      setMessage({
+        type: "success",
+        text: "Données enregistrées avec succès!",
+      });
+
       // Reset form
       setFormData({
-        date: format(new Date(), 'yyyy-MM-dd'),
-        boxType: 'Regard normal',
+        date: format(new Date(), "yyyy-MM-dd"),
+        boxType: "Regard normal",
         numberOfBoxes: 0,
         totalCost: 0,
       });
@@ -41,7 +47,10 @@ export default function Home() {
       // Clear message after 3 seconds
       setTimeout(() => setMessage(null), 3000);
     } catch {
-      setMessage({ type: 'error', text: 'Erreur lors de l\'enregistrement des données.' });
+      setMessage({
+        type: "error",
+        text: "Erreur lors de l'enregistrement des données.",
+      });
     }
   };
 
@@ -50,21 +59,28 @@ export default function Home() {
       <div className="mx-auto max-w-2xl">
         <div className="bg-white shadow-sm sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">Saisie des données</h2>
-            
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Saisie des données
+            </h2>
+
             {message && (
-              <div className={`mt-4 rounded-md p-4 ${
-                message.type === 'success' 
-                  ? 'bg-green-50 text-green-700 ring-1 ring-green-600/20' 
-                  : 'bg-red-50 text-red-700 ring-1 ring-red-600/20'
-              }`}>
+              <div
+                className={`mt-4 rounded-md p-4 ${
+                  message.type === "success"
+                    ? "bg-green-50 text-green-700 ring-1 ring-green-600/20"
+                    : "bg-red-50 text-red-700 ring-1 ring-red-600/20"
+                }`}
+              >
                 <p className="text-sm">{message.text}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-6">
               <div>
-                <label htmlFor="date" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="date"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Date
                 </label>
                 <div className="mt-2">
@@ -72,7 +88,9 @@ export default function Home() {
                     type="date"
                     id="date"
                     value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, date: e.target.value })
+                    }
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     required
                   />
@@ -80,14 +98,22 @@ export default function Home() {
               </div>
 
               <div>
-                <label htmlFor="boxType" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="boxType"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Type de boîte
                 </label>
                 <div className="mt-2">
                   <select
                     id="boxType"
                     value={formData.boxType}
-                    onChange={(e) => setFormData({ ...formData, boxType: e.target.value as BoxType })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        boxType: e.target.value as BoxType,
+                      })
+                    }
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     required
                   >
@@ -99,7 +125,10 @@ export default function Home() {
               </div>
 
               <div>
-                <label htmlFor="numberOfBoxes" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="numberOfBoxes"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Nombre de boîtes
                 </label>
                 <div className="mt-2">
@@ -108,7 +137,12 @@ export default function Home() {
                     id="numberOfBoxes"
                     min="0"
                     value={formData.numberOfBoxes}
-                    onChange={(e) => setFormData({ ...formData, numberOfBoxes: parseInt(e.target.value) })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        numberOfBoxes: parseInt(e.target.value),
+                      })
+                    }
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     required
                   />
@@ -116,7 +150,10 @@ export default function Home() {
               </div>
 
               <div>
-                <label htmlFor="totalCost" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="totalCost"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Coût total (MAD)
                 </label>
                 <div className="mt-2">
@@ -125,7 +162,12 @@ export default function Home() {
                     id="totalCost"
                     min="0"
                     value={formData.totalCost}
-                    onChange={(e) => setFormData({ ...formData, totalCost: parseFloat(e.target.value) })}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        totalCost: parseFloat(e.target.value),
+                      })
+                    }
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-xs ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                     required
                   />

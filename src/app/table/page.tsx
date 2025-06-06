@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import { format } from 'date-fns';
-import { useBoxStore } from '@/store/boxStore';
-import { useState, useEffect } from 'react';
-import { PencilIcon, TrashIcon, XMarkIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { format } from "date-fns";
+import { useBoxStore } from "@/store/boxStore";
+import { useState, useEffect } from "react";
+import {
+  PencilIcon,
+  TrashIcon,
+  XMarkIcon,
+  CheckIcon,
+} from "@heroicons/react/24/outline";
 
-type BoxType = 'Regard double' | 'Regard de chasse' | 'Regard normal';
+type BoxType = "Regard double" | "Regard de chasse" | "Regard normal";
 
 interface EditingEntry {
   date: string;
@@ -15,13 +20,22 @@ interface EditingEntry {
 }
 
 export default function TablePage() {
-  const { entries, isLoading, error, fetchEntries, addEntry, editEntry, deleteEntry, importEntries } = useBoxStore();
+  const {
+    entries,
+    isLoading,
+    error,
+    fetchEntries,
+    addEntry,
+    editEntry,
+    deleteEntry,
+    importEntries,
+  } = useBoxStore();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingValues, setEditingValues] = useState<EditingEntry | null>(null);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newEntry, setNewEntry] = useState<EditingEntry>({
-    date: format(new Date(), 'yyyy-MM-dd'),
-    boxType: 'Regard normal',
+    date: format(new Date(), "yyyy-MM-dd"),
+    boxType: "Regard normal",
     numberOfBoxes: 0,
     totalCost: 0,
   });
@@ -32,25 +46,34 @@ export default function TablePage() {
 
   const handleExportCSV = () => {
     const csvContent = [
-      ['Date', 'Type de boîte', 'Nombre de boîtes', 'Coût total', 'Coût unitaire', 'Prix Unitaire', 'Marge unitaire', 'Marge totale'],
+      [
+        "Date",
+        "Type de boîte",
+        "Nombre de boîtes",
+        "Coût total",
+        "Coût unitaire",
+        "Prix Unitaire",
+        "Marge unitaire",
+        "Marge totale",
+      ],
       ...entries.map((entry) => [
-        format(new Date(entry.date), 'dd/MM/yyyy'),
+        format(new Date(entry.date), "dd/MM/yyyy"),
         entry.boxType,
         entry.numberOfBoxes,
         entry.totalCost,
-        (entry.totalCost / entry.numberOfBoxes),
+        entry.totalCost / entry.numberOfBoxes,
         entry.unitCost,
         entry.unitMargin,
         entry.totalMargin,
       ]),
     ]
-      .map((row) => row.join(','))
-      .join('\n');
+      .map((row) => row.join(","))
+      .join("\n");
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `export_${format(new Date(), 'yyyy-MM-dd')}.csv`;
+    link.download = `export_${format(new Date(), "yyyy-MM-dd")}.csv`;
     link.click();
   };
 
@@ -61,13 +84,16 @@ export default function TablePage() {
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target?.result as string;
-      const rows = text.split('\n').slice(1); // Skip header row
+      const rows = text.split("\n").slice(1); // Skip header row
       const newEntries = rows
         .filter((row) => row.trim())
         .map((row) => {
-          const [date, boxType, numberOfBoxes, totalCost] = row.split(',');
+          const [date, boxType, numberOfBoxes, totalCost] = row.split(",");
           return {
-            date: format(new Date(date.split('/').reverse().join('-')), 'yyyy-MM-dd'),
+            date: format(
+              new Date(date.split("/").reverse().join("-")),
+              "yyyy-MM-dd"
+            ),
             boxType: boxType as BoxType,
             numberOfBoxes: Number(numberOfBoxes),
             totalCost: Number(totalCost),
@@ -107,8 +133,8 @@ export default function TablePage() {
   const handleAddNew = async () => {
     await addEntry(newEntry);
     setNewEntry({
-      date: format(new Date(), 'yyyy-MM-dd'),
-      boxType: 'Regard normal',
+      date: format(new Date(), "yyyy-MM-dd"),
+      boxType: "Regard normal",
       numberOfBoxes: 0,
       totalCost: 0,
     });
@@ -143,7 +169,11 @@ export default function TablePage() {
           >
             Exporter CSV
           </button>
-          <label className={`bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 cursor-pointer disabled:opacity-50 ${isLoading ? 'pointer-events-none' : ''}`}>
+          <label
+            className={`bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 cursor-pointer disabled:opacity-50 ${
+              isLoading ? "pointer-events-none" : ""
+            }`}
+          >
             Importer CSV
             <input
               type="file"
@@ -169,35 +199,62 @@ export default function TablePage() {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         )}
-        
+
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Date
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Type de boîte
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Nombre de boîtes
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Coût total
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Coût unitaire
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Prix Unitaire
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Marge unitaire
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Marge totale
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 Actions
               </th>
             </tr>
@@ -209,14 +266,21 @@ export default function TablePage() {
                   <input
                     type="date"
                     value={newEntry.date}
-                    onChange={(e) => setNewEntry({ ...newEntry, date: e.target.value })}
+                    onChange={(e) =>
+                      setNewEntry({ ...newEntry, date: e.target.value })
+                    }
                     className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
                     value={newEntry.boxType}
-                    onChange={(e) => setNewEntry({ ...newEntry, boxType: e.target.value as BoxType })}
+                    onChange={(e) =>
+                      setNewEntry({
+                        ...newEntry,
+                        boxType: e.target.value as BoxType,
+                      })
+                    }
                     className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   >
                     <option value="Regard normal">Regard normal</option>
@@ -228,7 +292,12 @@ export default function TablePage() {
                   <input
                     type="number"
                     value={newEntry.numberOfBoxes}
-                    onChange={(e) => setNewEntry({ ...newEntry, numberOfBoxes: Number(e.target.value) })}
+                    onChange={(e) =>
+                      setNewEntry({
+                        ...newEntry,
+                        numberOfBoxes: Number(e.target.value),
+                      })
+                    }
                     className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
@@ -236,7 +305,12 @@ export default function TablePage() {
                   <input
                     type="number"
                     value={newEntry.totalCost}
-                    onChange={(e) => setNewEntry({ ...newEntry, totalCost: Number(e.target.value) })}
+                    onChange={(e) =>
+                      setNewEntry({
+                        ...newEntry,
+                        totalCost: Number(e.target.value),
+                      })
+                    }
                     className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
@@ -267,26 +341,43 @@ export default function TablePage() {
                       <input
                         type="date"
                         value={editingValues?.date}
-                        onChange={(e) => setEditingValues({ ...editingValues!, date: e.target.value })}
+                        onChange={(e) =>
+                          setEditingValues({
+                            ...editingValues!,
+                            date: e.target.value,
+                          })
+                        }
                         className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <select
                         value={editingValues?.boxType}
-                        onChange={(e) => setEditingValues({ ...editingValues!, boxType: e.target.value as BoxType })}
+                        onChange={(e) =>
+                          setEditingValues({
+                            ...editingValues!,
+                            boxType: e.target.value as BoxType,
+                          })
+                        }
                         className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       >
                         <option value="Regard normal">Regard normal</option>
                         <option value="Regard double">Regard double</option>
-                        <option value="Regard de chasse">Regard de chasse</option>
+                        <option value="Regard de chasse">
+                          Regard de chasse
+                        </option>
                       </select>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <input
                         type="number"
                         value={editingValues?.numberOfBoxes}
-                        onChange={(e) => setEditingValues({ ...editingValues!, numberOfBoxes: Number(e.target.value) })}
+                        onChange={(e) =>
+                          setEditingValues({
+                            ...editingValues!,
+                            numberOfBoxes: Number(e.target.value),
+                          })
+                        }
                         className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
@@ -294,7 +385,12 @@ export default function TablePage() {
                       <input
                         type="number"
                         value={editingValues?.totalCost}
-                        onChange={(e) => setEditingValues({ ...editingValues!, totalCost: Number(e.target.value) })}
+                        onChange={(e) =>
+                          setEditingValues({
+                            ...editingValues!,
+                            totalCost: Number(e.target.value),
+                          })
+                        }
                         className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
@@ -319,7 +415,7 @@ export default function TablePage() {
                 ) : (
                   <>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {format(new Date(row.date), 'dd/MM/yyyy')}
+                      {format(new Date(row.date), "dd/MM/yyyy")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {row.boxType}
@@ -328,19 +424,26 @@ export default function TablePage() {
                       {row.numberOfBoxes}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {row.totalCost.toLocaleString('fr-FR')} MAD
+                      {row.totalCost.toLocaleString("fr-FR")} MAD
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {(row.totalCost / row.numberOfBoxes).toLocaleString('fr-FR')} MAD
+                      {(row.totalCost / row.numberOfBoxes).toLocaleString(
+                        "fr-FR"
+                      )}{" "}
+                      MAD
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {row.unitCost.toLocaleString('fr-FR')} MAD
+                      {row.unitCost.toLocaleString("fr-FR")} MAD
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {(row.unitCost - (row.totalCost / row.numberOfBoxes)).toLocaleString('fr-FR')} MAD
+                      {(
+                        row.unitCost -
+                        row.totalCost / row.numberOfBoxes
+                      ).toLocaleString("fr-FR")}{" "}
+                      MAD
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {row.totalMargin.toLocaleString('fr-FR')} MAD
+                      {row.totalMargin.toLocaleString("fr-FR")} MAD
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                       <button
@@ -367,4 +470,4 @@ export default function TablePage() {
       </div>
     </div>
   );
-} 
+}

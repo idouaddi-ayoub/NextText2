@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import Sidebar from "@/components/Sidebar";
-import "./globals.css";
+import "./styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,27 +16,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" style={{ height: "100%" }} className="h-full">
-      <head>
-        <Script
-          src="https://cdn.tailwindcss.com"
-          strategy="beforeInteractive"
-        />
-        <Script id="tailwind-config" strategy="beforeInteractive">
-          {`
-            tailwind.config = {
-              theme: {
-                extend: {
-                  colors: {
-                    primary: '#1a365d',
-                    secondary: '#2d3748',
-                    accent: '#4299e1',
-                  }
-                }
-              }
-            }
-          `}
-        </Script>
-      </head>
       <body
         className={inter.className}
         style={{
