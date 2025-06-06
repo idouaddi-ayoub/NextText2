@@ -1,8 +1,5 @@
-import { Inter } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
-import "./styles/globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
 
 export const metadata = {
   title: "ANAYASS - Tableau de bord",
@@ -17,7 +14,6 @@ export default function RootLayout({
   return (
     <html lang="fr" style={{ height: "100%" }} className="h-full">
       <body
-        className={inter.className}
         style={{
           height: "100%",
           margin: 0,
