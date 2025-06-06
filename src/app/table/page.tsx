@@ -210,14 +210,14 @@ export default function TablePage() {
                     type="date"
                     value={newEntry.date}
                     onChange={(e) => setNewEntry({ ...newEntry, date: e.target.value })}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <select
                     value={newEntry.boxType}
                     onChange={(e) => setNewEntry({ ...newEntry, boxType: e.target.value as BoxType })}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   >
                     <option value="Regard normal">Regard normal</option>
                     <option value="Regard double">Regard double</option>
@@ -229,7 +229,7 @@ export default function TablePage() {
                     type="number"
                     value={newEntry.numberOfBoxes}
                     onChange={(e) => setNewEntry({ ...newEntry, numberOfBoxes: Number(e.target.value) })}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -237,7 +237,7 @@ export default function TablePage() {
                     type="number"
                     value={newEntry.totalCost}
                     onChange={(e) => setNewEntry({ ...newEntry, totalCost: Number(e.target.value) })}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                   />
                 </td>
                 <td colSpan={4}></td>
@@ -268,14 +268,14 @@ export default function TablePage() {
                         type="date"
                         value={editingValues?.date}
                         onChange={(e) => setEditingValues({ ...editingValues!, date: e.target.value })}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <select
                         value={editingValues?.boxType}
                         onChange={(e) => setEditingValues({ ...editingValues!, boxType: e.target.value as BoxType })}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       >
                         <option value="Regard normal">Regard normal</option>
                         <option value="Regard double">Regard double</option>
@@ -287,7 +287,7 @@ export default function TablePage() {
                         type="number"
                         value={editingValues?.numberOfBoxes}
                         onChange={(e) => setEditingValues({ ...editingValues!, numberOfBoxes: Number(e.target.value) })}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -295,7 +295,7 @@ export default function TablePage() {
                         type="number"
                         value={editingValues?.totalCost}
                         onChange={(e) => setEditingValues({ ...editingValues!, totalCost: Number(e.target.value) })}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        className="block w-full rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       />
                     </td>
                     <td colSpan={4}></td>

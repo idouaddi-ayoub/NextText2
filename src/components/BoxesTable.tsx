@@ -28,7 +28,7 @@ export default function BoxesTable({ selectedBoxType, onBoxTypeChange }: BoxesTa
         <select
           value={selectedBoxType}
           onChange={(e) => onBoxTypeChange(e.target.value as BoxEntry['boxType'] | 'all')}
-          className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+          className="rounded-md border-gray-300 shadow-xs focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
         >
           <option value="all">Tous les types</option>
           <option value="Regard normal">Regard normal</option>
